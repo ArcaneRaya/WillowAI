@@ -8,6 +8,8 @@ public class SubscribtionBasedCollection<T> {
     public Action<T> InstanceAddedAction;
     public Action<T> InstanceRemovedAction;
 
+    public List<T> List { get { return internalList; } }
+
     protected List<T> internalList = new List<T>();
 
     public void Subscribe(T instance) {

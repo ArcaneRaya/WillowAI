@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class EntityBlueprint : ScriptableObject {
+public class EntityBlueprint : Blueprint<EntityView, Entity> {
 
     public enum EntityType {
         Whisp,
@@ -11,5 +11,4 @@ public class EntityBlueprint : ScriptableObject {
     }
 
     public EntityType Type;
-    public EntityView Prefab;
 }

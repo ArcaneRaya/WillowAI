@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : TimeDependentScript
+public class Entity : Model<EntityView, Entity>
 {
 
     public static Entity CreateEntity (EntityBlueprint blueprint, Vector3 position) {
@@ -13,8 +13,7 @@ public class Entity : TimeDependentScript
                 throw new System.NotImplementedException();
         }
     }
-
-    public EntityBlueprint Blueprint;
+    
     public Vector3 Position;
 
     public Entity(EntityBlueprint blueprint, Vector3 position) {
@@ -24,6 +23,5 @@ public class Entity : TimeDependentScript
 
     protected override void OnTick(float elapsedTime) {
         base.OnTick(elapsedTime);
-        Debug.Log("tick");
     }
 }

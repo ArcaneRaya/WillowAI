@@ -8,8 +8,9 @@ public interface ITimeDependent {
     void Stop();
 }
 
-public class TimeDependentScript : ITimeDependent
-{
+public class Model<U,T> : ITimeDependent where U : View<T> where T : Model<U,T> {
+    public Blueprint<U,T> Blueprint;
+
     public void Setup() {
         Core.Instance.SubscribeTimeDependentInstance(this);
         OnSetup();

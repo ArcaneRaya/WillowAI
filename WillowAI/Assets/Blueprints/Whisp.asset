@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a40632662102d4d9d1a578ec914e01, type: 3}
   m_Name: Whisp
   m_EditorClassIdentifier: 
-  Type: 0
   Prefab: {fileID: 2308455157602700670, guid: a20248849d687e3458f58145e126bb15, type: 3}
+  Type: 0
