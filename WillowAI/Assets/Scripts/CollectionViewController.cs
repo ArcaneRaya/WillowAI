@@ -17,7 +17,7 @@ public abstract class View<T> : TimeDependentMonoBehaviour {
 
 namespace CollectionControllers {
 
-    public abstract class CollectionController<T, U> : ITimeDependent where U : View<T> where T : Model <U,T>
+    public class CollectionController<T, U> : ITimeDependent where U : View<T> where T : Model <U,T>
     {
 
         protected TimeDependantCollection<T> Data = new TimeDependantCollection<T>();
