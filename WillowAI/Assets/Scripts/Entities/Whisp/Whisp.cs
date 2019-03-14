@@ -2,17 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Whisp : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public class Whisp : Entity {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public Whisp(EntityBlueprint blueprint, Vector3 position) : base(blueprint, position) {
     }
 }

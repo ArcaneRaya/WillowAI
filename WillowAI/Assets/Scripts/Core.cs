@@ -6,13 +6,19 @@ public class Core : PersistantSingleton<Core>
 {
     public TimeDependantCollection<Entity> Entities = new TimeDependantCollection<Entity>();
 
-    public void SubscribeTimeDependentInstance(TimeDependentScript instance) {
+    [SerializeField] private GameInitializer gameInitializer;
+
+    private void Awake() {
+        gameInitializer.InitializeGame();
+    }
+
+    public void SubscribeTimeDependentInstance(ITimeDependent instance) {
         if (instance is Entity) {
             Entities.Subscribe(instance as Entity);
         }
     }
 
-    public void UnSubscribeTimeDependentInstance(TimeDependentScript instance) {
+    public void UnSubscribeTimeDependentInstance(ITimeDependent instance) {
         if (instance is Entity) {
             Entities.UnSubscribe(instance as Entity);
         }
