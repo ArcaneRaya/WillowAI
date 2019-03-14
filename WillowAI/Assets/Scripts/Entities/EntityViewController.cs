@@ -11,7 +11,7 @@ public class EntityViewController : MonoBehaviour
         }
     }
 
-    private List<EntityView> viewCollection;
+    private List<EntityView> viewCollection = new List<EntityView>();
 
     private void Awake() {
         dataCollection.InstanceAddedAction += OnInstanceAdded;

@@ -28,7 +28,7 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     }
 
     private void Awake() {
-        if (instance == null) {
+        if (instance == null || instance == this) {
             instance = this as T;
             OnAwake();
         } else {

@@ -8,7 +8,7 @@ public class Core : PersistantSingleton<Core>
 
     [SerializeField] private GameInitializer gameInitializer;
 
-    private void Awake() {
+    private void Start() {
         gameInitializer.InitializeGame();
     }
 

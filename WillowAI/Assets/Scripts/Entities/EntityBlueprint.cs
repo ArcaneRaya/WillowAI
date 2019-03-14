@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu]
 public class EntityBlueprint : ScriptableObject {
 
     public enum EntityType {

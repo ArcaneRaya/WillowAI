@@ -8,7 +8,7 @@ public class SubscribtionBasedCollection<T> {
     public Action<T> InstanceAddedAction;
     public Action<T> InstanceRemovedAction;
 
-    protected List<T> internalList;
+    protected List<T> internalList = new List<T>();
 
     public void Subscribe(T instance) {
         if (internalList.Contains(instance) == false) {
