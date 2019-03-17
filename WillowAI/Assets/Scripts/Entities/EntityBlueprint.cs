@@ -11,4 +11,5 @@ public class EntityBlueprint : Blueprint<EntityView, Entity> {
     }
 
     public EntityType Type;
+    public float RangeOfVision;
 }

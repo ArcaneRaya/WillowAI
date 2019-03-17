@@ -14,7 +14,7 @@ public class GameInitializer : MonoBehaviour {
     private void CreateWhisps(int amount) {
         for (int i = 0; i < amount; i++) {
             Entity whisp = Entity.CreateEntity(whispBlueprint, new Vector3(i, 0, 0));
-            whisp.Setup();
+            whisp.Activate();
         }
     }
 }

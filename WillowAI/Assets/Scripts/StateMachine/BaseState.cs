@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseState : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class BaseState {
+    protected Entity entity;
+
+    public BaseState(Entity entity) {
+        this.entity = entity;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public virtual void EnterState() {
+
+    }
+
+    public virtual void Tick(float elapsedTime) {
+
+    }
+
+    public virtual void ExitState() {
+
     }
 }

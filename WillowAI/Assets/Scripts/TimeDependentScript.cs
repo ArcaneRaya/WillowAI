@@ -3,42 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface ITimeDependent {
-    void Setup();
+    void Activate();
     void Tick(float elapsedTime);
-    void Stop();
+    void DeActivate();
 }
 
-public class Model<U,T> : ITimeDependent where U : View<T> where T : Model<U,T> {
-    public Blueprint<U,T> Blueprint;
+public class Model<U, T> : ITimeDependent where U : View<T> where T : Model<U, T> {
+    public Blueprint<U, T> Blueprint;
 
-    public void Setup() {
+    public Model(Blueprint<U, T> blueprint) {
+        Blueprint = blueprint;
+    }
+
+    public void Activate() {
         Core.Instance.SubscribeTimeDependentInstance(this);
-        OnSetup();
+        OnActivate();
     }
 
     public void Tick(float elapsedTime) {
         OnTick(elapsedTime);
     }
 
-    public void Stop() {
+    public void DeActivate() {
         Core.Instance.UnSubscribeTimeDependentInstance(this);
-        OnStop();
+        OnDeActivate();
     }
 
-    protected virtual void OnSetup() { }
+    protected virtual void OnActivate() { }
 
     protected virtual void OnTick(float elapsedTime) { }
 
-    protected virtual void OnStop() { }
+    protected virtual void OnDeActivate() { }
 }
 
 public class TimeDependentMonoBehaviour : MonoBehaviour, ITimeDependent {
-    public void Setup() {
+    public void Activate() {
         Core.Instance.SubscribeTimeDependentInstance(this);
         OnSetup();
     }
 
-    public void Stop() {
+    public void DeActivate() {
         Core.Instance.UnSubscribeTimeDependentInstance(this);
         OnStop();
     }

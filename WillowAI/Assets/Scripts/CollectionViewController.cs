@@ -17,15 +17,14 @@ public abstract class View<T> : TimeDependentMonoBehaviour {
 
 namespace CollectionControllers {
 
-    public class CollectionController<T, U> : ITimeDependent where U : View<T> where T : Model <U,T>
-    {
+    public class CollectionController<T, U> : ITimeDependent where U : View<T> where T : Model<U, T> {
 
-        protected TimeDependantCollection<T> Data = new TimeDependantCollection<T>();
-        protected TimeDependantCollection<U> Views = new TimeDependantCollection<U>();
+        public TimeDependantCollection<T> Data = new TimeDependantCollection<T>();
+        public TimeDependantCollection<U> Views = new TimeDependantCollection<U>();
 
         protected Transform transform;
 
-        public void Setup() {
+        public void Activate() {
             transform = new GameObject(typeof(U).ToString() + " - instances").transform;
             Data.InstanceAddedAction += OnDataInstanceAdded;
             Data.InstanceRemovedAction += OnDataInstanceRemoved;
@@ -36,7 +35,7 @@ namespace CollectionControllers {
             Views.Tick(elapsedTime);
         }
 
-        public void Stop() {
+        public void DeActivate() {
 
         }
 
