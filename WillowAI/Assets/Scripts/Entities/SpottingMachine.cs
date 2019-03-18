@@ -3,15 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpottingMachine {
+public abstract class SpottingMachine {
 
-    protected virtual IEnumerable<ISpottable>[] spotCollections {
-        get {
-            return new IEnumerable<ISpottable>[]{
-                Core.Instance.EntityController.Data.List as IEnumerable<ISpottable>
-            };
-        }
-    }
+    protected abstract IEnumerable<ISpottable>[] spotCollections { get; }
 
     public FocusData FocusedObject {
         get {
@@ -37,6 +31,7 @@ public class SpottingMachine {
     public SpottingMachine(Entity entity, float rangeOfVision) {
         this.entity = entity;
         this.rangeOfVision = rangeOfVision;
+        this.visibleObjects = new List<VisibleObject>();
     }
 
     public void Tick(float elapsedTime) {
@@ -45,9 +40,7 @@ public class SpottingMachine {
         UpdateFocusedObject(elapsedTime);
     }
 
-    protected virtual int GetImportanceMultliplier(ISpottable spottable) {
-        return 1;
-    }
+    protected abstract float GetImportanceMultliplier(ISpottable spottable);
 
     private void UpdateVisibleObjects(float elapsedTime) {
         List<VisibleObject> oldVisibleObjects = visibleObjects;
@@ -92,6 +85,9 @@ public class SpottingMachine {
     }
 
     private void UpdateFocusedObject(float elapsedTime) {
+        if (FocusedObject == null) { return; }
+        if (FocusedObject.VisibleObject.Spottable == null) { FocusedObject = null; return; }
+
         if (IsSpottableInVision(FocusedObject.VisibleObject.Spottable)) {
             FocusedObject.LastSpottedPosition = FocusedObject.VisibleObject.Spottable.Position;
             if (FocusedObject.Progress < 1) {

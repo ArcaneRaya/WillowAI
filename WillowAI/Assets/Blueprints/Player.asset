@@ -8,9 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66a40632662102d4d9d1a578ec914e01, type: 3}
-  m_Name: Whisp
+  m_Script: {fileID: 11500000, guid: 9ab5ae45725b84ba9a5da47a8d73d41f, type: 3}
+  m_Name: Player
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 2308455157602700670, guid: a20248849d687e3458f58145e126bb15, type: 2}
-  Type: 0
-  RangeOfVision: 50
+  Prefab: {fileID: 114258359325187600, guid: 726fcbded66ad4daabf01decbdd750c9, type: 2}

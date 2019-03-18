@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,9 +14,8 @@ public abstract class Entity : Model<EntityView, Entity>, ISpottable {
         }
     }
 
-    public SpottingMachine SpottingMachine { get; private set; }
-    public StateMachine StateMachine { get; private set; }
-    public StateMachine MovementStateMachine { get; private set; }
+    public StateMachine StateMachine { get; protected set; }
+    public StateMachine MovementStateMachine { get; protected set; }
     public EntityBlueprint EntityBlueprint {
         get {
             return Blueprint as EntityBlueprint;
@@ -28,23 +28,12 @@ public abstract class Entity : Model<EntityView, Entity>, ISpottable {
 
     public Entity(EntityBlueprint blueprint, Vector3 position) : base(blueprint) {
         this.Position = position;
-        SpottingMachine = new SpottingMachine(this, EntityBlueprint.RangeOfVision);
         StateMachine = new StateMachine();
         MovementStateMachine = new StateMachine();
     }
 
-    protected override void OnActivate() {
-        base.OnActivate();
-        StateMachine.GoToState(idleState);
-    }
-
-    protected override void OnDeActivate() {
-        base.OnDeActivate();
-    }
-
     protected override void OnTick(float elapsedTime) {
         base.OnTick(elapsedTime);
-        SpottingMachine.Tick(elapsedTime);
         StateMachine.Tick(elapsedTime);
         MovementStateMachine.Tick(elapsedTime);
     }

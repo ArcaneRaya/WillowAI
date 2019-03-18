@@ -11,5 +11,8 @@ public class EntityBlueprint : Blueprint<EntityView, Entity> {
     }
 
     public EntityType Type;
-    public float RangeOfVision;
+    public float RangeOfVision = 50;
+    public float FleeDistance = 10;
+    public float ImmediateAlertDistance = 20;
+    public float StayAlertedFor = 3;
 }
