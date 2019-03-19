@@ -48,6 +48,7 @@ public class Core : PersistantSingleton<Core> {
 
         EntityController.Tick(elapsedTime);
         FragmentController.Tick(elapsedTime);
+        PlayerController.Tick(elapsedTime);
     }
 
 }
