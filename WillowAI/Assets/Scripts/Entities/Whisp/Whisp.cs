@@ -33,11 +33,12 @@ public class Whisp : Entity {
     private void UpdateTrustedPlayers(float elapsedTime) {
         if (TrustedPlayers.Count == 0) { return; }
 
-        for (int i = TrustedPlayers.Count - 1; i < 0; i--) {
+        for (int i = TrustedPlayers.Count - 1; i >= 0; i--) {
             TrustedPlayers[i].TimeTrusting += elapsedTime;
-            if (TrustedPlayers[i].TimeTrusting > 4) {
-                Debug.Log("removed trusted player");
-                TrustedPlayers.RemoveAt(i);
+            if (TrustedPlayers[i].TimeTrusting > EntityBlueprint.TrustTime) {
+                if (PlayerSpottingMachine.IsSpottableVisible(TrustedPlayers[i].Player as ISpottable) == false) {
+                    TrustedPlayers.RemoveAt(i);
+                }
             }
         }
     }

@@ -15,4 +15,5 @@ public class EntityBlueprint : Blueprint<EntityView, Entity> {
     public float FleeDistance = 10;
     public float ImmediateAlertDistance = 20;
     public float StayAlertedFor = 3;
+    public float TrustTime = 8;
 }

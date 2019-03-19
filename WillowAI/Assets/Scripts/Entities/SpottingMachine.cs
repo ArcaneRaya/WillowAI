@@ -40,6 +40,11 @@ public abstract class SpottingMachine {
         UpdateFocusedObject(elapsedTime);
     }
 
+    public bool IsSpottableVisible(ISpottable spottable) {
+        VisibleObject visibleObject = visibleObjects.Find((obj) => obj.Spottable == spottable);
+        return visibleObject != null;
+    }
+
     protected abstract float GetImportanceMultliplier(ISpottable spottable);
 
     private void UpdateVisibleObjects(float elapsedTime) {

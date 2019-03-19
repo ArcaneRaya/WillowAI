@@ -14,7 +14,6 @@ public class WhispStateAlert : WhispBaseState {
     public override void EnterState() {
         base.EnterState();
         timeAlerted = 0;
-        Debug.Log("alerted");
     }
 
     public override void ExitState() {
