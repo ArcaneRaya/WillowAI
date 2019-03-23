@@ -6,12 +6,12 @@ public class PathfindingController : MonoBehaviour {
 
     [SerializeField] private PathfindingGrid pathfindingGrid;
 
-    // Use this for initialization
+
     void Start() {
 
     }
 
-    // Update is called once per frame
+
     void Update() {
 
     }
@@ -37,5 +37,10 @@ public class PathfindingController : MonoBehaviour {
                 continue;
             }
         }
+    }
+
+    [ContextMenu("Generate From Scene")]
+    public void GenerateGrid() {
+        pathfindingGrid.GenerateGridFromOpenScene();
     }
 }

@@ -9,6 +9,7 @@ public class PathfindingGrid : ScriptableObject {
     public LayerMask Floor;
     public LayerMask Obstacle;
     public float NodeSize = 1;
+    public float UnitHeight = 2;
 
     public int rowAmount;
     public int columnAmount;
@@ -16,7 +17,7 @@ public class PathfindingGrid : ScriptableObject {
 
 
     [ContextMenu("Generate From Open Scene")]
-    public void GenerateGridFromScene() {
+    public void GenerateGridFromOpenScene() {
         Vector3 bottomFrontLeft;
         Vector3 topBackRight;
         FindGridExtent(out bottomFrontLeft, out topBackRight);
@@ -39,16 +40,25 @@ public class PathfindingGrid : ScriptableObject {
                 Vector3 raycastOrigin = new Vector3(nodeCenter.x, aboveWorldHeight, nodeCenter.y);
                 float spherecastRadius = NodeSize / 3;
                 float height = float.MinValue;
+
+                Vector3 worldPositionFloor = new Vector3(nodeCenter.x, bottomFrontLeft.y, nodeCenter.y);
                 if (Physics.SphereCast(raycastOrigin, spherecastRadius, Vector3.down, out hit, maxSpherecastLength, Floor)) {
                     height = hit.point.y;
                     isWalkable = true;
+                    worldPositionFloor.y = height;
                 }
-                if (Physics.SphereCast(raycastOrigin, spherecastRadius, Vector3.down, out hit, maxSpherecastLength, Obstacle)) {
-                    if (hit.point.y > height) {
-                        height = hit.point.y;
+
+                float heightChecked = 0;
+                while (heightChecked < UnitHeight) {
+                    float heightAdjust = heightChecked > (UnitHeight - spherecastRadius * 2) ? UnitHeight - spherecastRadius * 2 : heightChecked;
+                    Vector3 spherePos = worldPositionFloor + Vector3.up * spherecastRadius + Vector3.up * heightAdjust;
+                    if (Physics.CheckSphere(spherePos, spherecastRadius, Obstacle)) {
                         isObstacle = true;
+                        break;
                     }
+                    heightChecked += spherecastRadius * 2;
                 }
+
                 Nodes[x * columnAmount + z] = new PathfindingNode(isObstacle, isWalkable, x, z, height, nodeCenter);
             }
         }
