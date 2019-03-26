@@ -17,6 +17,7 @@ public class PathfindingNode {
     public bool IsObstacle;
     public bool IsWalkable;
 
+    public Vector2 GridPosition { get { return new Vector2(GridX, GridY); } }
     public Vector2 FlatWorldPosition;
 
     public PathfindingNode Parent;

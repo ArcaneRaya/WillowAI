@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Model<PlayerView, Player>, ISpottable {
+public class Player : Model<PlayerView, Player>, ISpottable, IMovable {
 
     public Vector3 Position { get; private set; }
 

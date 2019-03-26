@@ -15,6 +15,74 @@ public class PathfindingGrid : ScriptableObject {
     public int columnAmount;
     public PathfindingNode[] Nodes;
 
+    public PathfindingNode GetClosestNode(Vector3 worldPosition) {
+        float sqrDist = float.MaxValue;
+        PathfindingNode closestNode = null;
+
+        foreach (PathfindingNode node in Nodes) {
+            float newSqrDist = (node.WorldPosition - worldPosition).sqrMagnitude;
+            if (newSqrDist < sqrDist) {
+                sqrDist = newSqrDist;
+                closestNode = node;
+            }
+        }
+
+        return closestNode;
+    }
+
+    public PathfindingNode GetClosestNode(Vector2 gridPosition) {
+        float sqrDist = float.MaxValue;
+        PathfindingNode closestNode = null;
+
+        foreach (PathfindingNode node in Nodes) {
+            float newSqrDist = (node.GridPosition - gridPosition).sqrMagnitude;
+            if (newSqrDist < sqrDist) {
+                sqrDist = newSqrDist;
+                closestNode = node;
+            }
+        }
+
+        return closestNode;
+    }
+
+    public List<PathfindingNode> GetNeighbourNodes(PathfindingNode origin) {
+        List<PathfindingNode> neighbours = new List<PathfindingNode>();
+
+        // to the left
+        if (origin.GridX > 0) {
+            neighbours.Add(Nodes[(origin.GridX - 1) * columnAmount + origin.GridY]);
+            if (origin.GridY > 0) {
+                neighbours.Add(Nodes[(origin.GridX - 1) * columnAmount + (origin.GridY - 1)]);
+            }
+            if (origin.GridY < columnAmount - 1) {
+                neighbours.Add(Nodes[(origin.GridX - 1) * columnAmount + (origin.GridY + 1)]);
+            }
+        }
+        // top and bottom
+        if (origin.GridY > 0) {
+            neighbours.Add(Nodes[(origin.GridX) * columnAmount + (origin.GridY - 1)]);
+        }
+        if (origin.GridY < columnAmount - 1) {
+            neighbours.Add(Nodes[(origin.GridX) * columnAmount + (origin.GridY + 1)]);
+        }
+        // to the right
+        if (origin.GridX < rowAmount - 1) {
+            neighbours.Add(Nodes[(origin.GridX + 1) * columnAmount + origin.GridY]);
+            if (origin.GridY > 0) {
+                neighbours.Add(Nodes[(origin.GridX + 1) * columnAmount + (origin.GridY - 1)]);
+            }
+            if (origin.GridY < columnAmount - 1) {
+                neighbours.Add(Nodes[(origin.GridX + 1) * columnAmount + (origin.GridY + 1)]);
+            }
+        }
+
+        return neighbours;
+    }
+
+    public void SetPosition(int gridX, int gridY, bool isObstacle, bool isWalkable) {
+        Nodes[gridX * columnAmount + gridY].IsObstacle = isObstacle;
+        Nodes[gridX * columnAmount + gridY].IsWalkable = isWalkable;
+    }
 
     [ContextMenu("Generate From Open Scene")]
     public void GenerateGridFromOpenScene() {
@@ -53,6 +121,7 @@ public class PathfindingGrid : ScriptableObject {
                     float heightAdjust = heightChecked > (UnitHeight - spherecastRadius * 2) ? UnitHeight - spherecastRadius * 2 : heightChecked;
                     Vector3 spherePos = worldPositionFloor + Vector3.up * spherecastRadius + Vector3.up * heightAdjust;
                     if (Physics.CheckSphere(spherePos, spherecastRadius, Obstacle)) {
+                        isWalkable = false;
                         isObstacle = true;
                         break;
                     }

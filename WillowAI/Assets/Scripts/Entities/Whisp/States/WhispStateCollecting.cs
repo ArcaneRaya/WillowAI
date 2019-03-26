@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,15 @@ public class WhispStateCollecting : WhispBaseState {
 
     public override void EnterState() {
         base.EnterState();
+        MoveTowardsTarget(currentTarget.Position);
+    }
+
+    protected override void OnDestinationReached() {
+        base.OnDestinationReached();
+        whisp.FragmentSpottingMachine.ResetFocusedTarget();
+        currentTarget.DeActivate();
+        currentTarget = null;
+        GoToExploringState();
     }
 
     public override void ExitState() {
@@ -19,13 +29,9 @@ public class WhispStateCollecting : WhispBaseState {
 
     public override void Tick(float elapsedTime) {
         base.Tick(elapsedTime);
-        if (currentTarget != null) {
-            entity.Position = Vector3.MoveTowards(entity.Position, currentTarget.Position, 4 * elapsedTime);
 
-            float distSqr = (currentTarget.Position - entity.Position).sqrMagnitude;
-            if (distSqr < 2 * 2) {
-                currentTarget.DeActivate();
-                currentTarget = null;
+        if (currentTarget == null) {
+            {
                 GoToExploringState();
             }
         }

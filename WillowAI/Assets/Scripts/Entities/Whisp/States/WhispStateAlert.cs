@@ -29,7 +29,7 @@ public class WhispStateAlert : WhispBaseState {
         if (playerDir.sqrMagnitude < entity.EntityBlueprint.FleeDistance * entity.EntityBlueprint.FleeDistance) {
             GoToFleeingState(spottedPlayer);
         } else if (playerDir.sqrMagnitude < entity.EntityBlueprint.ImmediateAlertDistance * entity.EntityBlueprint.ImmediateAlertDistance) {
-            entity.Position = Vector3.MoveTowards(entity.Position, entity.Position - playerDir, 4f * elapsedTime);
+            MoveTowardsTarget(entity.Position - playerDir);
             timeAlerted = 0;
         } else if (timeAlerted > entity.EntityBlueprint.StayAlertedFor) {
             whisp.TrustedPlayers.Add(new Whisp.TrustedPlayer(spottedPlayer));

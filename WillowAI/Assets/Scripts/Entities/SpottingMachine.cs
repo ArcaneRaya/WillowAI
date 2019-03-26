@@ -34,6 +34,10 @@ public abstract class SpottingMachine {
         this.visibleObjects = new List<VisibleObject>();
     }
 
+    public void ResetFocusedTarget() {
+        FocusedObject = null;
+    }
+
     public void Tick(float elapsedTime) {
         UpdateVisibleObjects(elapsedTime);
         RedefineTarget();

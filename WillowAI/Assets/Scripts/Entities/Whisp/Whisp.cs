@@ -10,16 +10,16 @@ public class Whisp : Entity {
 
     public List<TrustedPlayer> TrustedPlayers;
 
-    public Whisp(EntityBlueprint blueprint, Vector3 position) : base(blueprint, position) {
-        PlayerSpottingMachine = new WhispPlayerSpottingMachine(this, EntityBlueprint.RangeOfVision);
-        FragmentSpottingMachine = new WhispFragmentSpottingMachine(this, EntityBlueprint.RangeOfVision);
-        TrustedPlayers = new List<TrustedPlayer>();
-    }
-
     protected override BaseState idleState {
         get {
             return new WhispStateExploring(this);
         }
+    }
+
+    public Whisp(EntityBlueprint blueprint, Vector3 position) : base(blueprint, position) {
+        PlayerSpottingMachine = new WhispPlayerSpottingMachine(this, EntityBlueprint.RangeOfVision);
+        FragmentSpottingMachine = new WhispFragmentSpottingMachine(this, EntityBlueprint.RangeOfVision);
+        TrustedPlayers = new List<TrustedPlayer>();
     }
 
     protected override void OnTick(float elapsedTime) {

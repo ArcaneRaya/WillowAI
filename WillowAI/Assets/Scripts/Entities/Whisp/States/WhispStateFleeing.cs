@@ -12,6 +12,7 @@ public class WhispStateFleeing : WhispBaseState {
 
     public override void EnterState() {
         base.EnterState();
+        MoveAwayFromPlayer();
     }
 
     public override void ExitState() {
@@ -22,9 +23,20 @@ public class WhispStateFleeing : WhispBaseState {
         base.Tick(elapsedTime);
         Vector3 playerDir = fleeingFromPlayer.Position - entity.Position;
         if (playerDir.sqrMagnitude < entity.EntityBlueprint.ImmediateAlertDistance * entity.EntityBlueprint.ImmediateAlertDistance) {
-            entity.Position = Vector3.MoveTowards(entity.Position, entity.Position - playerDir, 7.5f * elapsedTime);
+            MoveAwayFromPlayer();
         } else {
+            whisp.Agent.Stop();
             GoToAlertState(fleeingFromPlayer);
         }
+    }
+
+    private void MoveAwayFromPlayer() {
+        Vector3 playerDir = (fleeingFromPlayer.Position - entity.Position).normalized;
+        MoveTowardsTarget(whisp.Position - playerDir * 3);
+    }
+
+    protected override void OnDestinationReached() {
+        base.OnDestinationReached();
+        MoveAwayFromPlayer();
     }
 }

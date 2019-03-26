@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fragment : Model<FragmentView, Fragment>, ISpottable {
+public class Fragment : Model<FragmentView, Fragment>, ISpottable, IMovable {
 
     public static Fragment Create(FragmentBlueprint fragmentBlueprint, Vector3 position) {
         return new Fragment(fragmentBlueprint, position);
